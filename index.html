@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learn ESP32 — 20 課全紀錄</title>
+<style>
+:root{--bg:#0e1116;--panel:#151b24;--line:#242f3d;--fg:#e8eef7;--dim:#8494a8;--acc:#37b6ff;--ok:#3ddc97;--warm:#ffb02e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.65 -apple-system,"PingFang TC","Noto Sans TC",sans-serif;padding:30px 18px 70px}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:28px;letter-spacing:.01em}
+.sub{color:var(--dim);font-size:13.5px;margin:8px 0 26px;line-height:1.7}
+.sub a{color:var(--acc)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:.15s}
+.card:hover{border-color:var(--acc);transform:translateY(-2px)}
+.card img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;background:#0a0d12}
+.card .b{padding:13px 16px 16px}
+.card .n{font-size:11px;letter-spacing:.14em;color:var(--acc);font-weight:700}
+.card .t{font-size:16.5px;font-weight:700;margin:3px 0 8px}
+.card .why{font-size:12.8px;color:var(--dim);line-height:1.6;border-left:2px solid #2b6ea8;padding-left:9px}
+h2{font-size:20px;margin:44px 0 6px}
+.hint{color:var(--dim);font-size:13px;margin-bottom:16px}
+.esp{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+.esp .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:14px}
+.esp img{width:100%;border-radius:10px;border:1px solid var(--line)}
+pre{background:#0a0d12;border:1px solid var(--line);border-radius:10px;padding:13px 15px;overflow:auto;
+    font:12.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;color:#b9c9dd;max-height:260px}
+.pill{display:inline-block;background:rgba(55,182,255,.14);color:var(--acc);border-radius:999px;
+      padding:3px 11px;font-size:12px;margin-right:6px}
+.warn{border-left:3px solid var(--warn);background:rgba(255,176,46,.07);border-radius:0 8px 8px 0;
+      padding:10px 13px;font-size:13px;color:#ffd68a;margin-top:14px}
+#lb{position:fixed;inset:0;background:rgba(5,8,12,.95);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:100%;border-radius:8px}
+#lb .x{position:absolute;top:14px;right:22px;color:#fff;font-size:30px;cursor:pointer;opacity:.7}
+footer{margin-top:50px;color:#5c6b80;font-size:12.5px;border-top:1px solid var(--line);padding-top:16px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Learn ESP32 — 20 課全紀錄</h1>
+  <div class="sub">
+    2026-11-18 實跑截圖，每課都按下「執行程式」、等燒錄完成後才截。<br>
+    原始網站：<a href="https://learn-esp32.vercel.app/" target="_blank">learn-esp32.vercel.app</a>（作者 x.com/DilumSanjaya）<br>
+    這是 <b>瀏覽器模擬器</b>，不是實體電路 —— 無線電與感測數值皆為理想化模型。
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <h2>加碼：嘉蘭 1號 / 2號 — ESP-NOW 實測</h2>
+  <div class="hint">用第 14 課的兩塊板當我們的兩個頸圈代號，跑完並存檔。</div>
+  <div class="esp">
+    <div><span class="pill">嘉蘭1號 24:6F:28:A1:3C:5D</span><span class="pill">嘉蘭2號 24:6F:28:B2:4C:10</span><span class="pill">10 m</span></div>
+    <div class="row">
+      <div><img src="espnow/02_切換.png" alt="ESP-NOW 切換"></div>
+      <div>
+        <pre>A &#8250; 24:6F:28:A1:3C:5D
+B &#8250; 24:6F:28:B2:4C:10
+A &#8250; Sent 1
+B &#8250; Got 1 (-62 dBm)
+B &#8250; Sent 1
+A &#8250; Got 1 (-64 dBm)
+A &#8250; Sent 0
+B &#8250; Got 0 (-60 dBm)
+B &#8250; Sent 0
+A &#8250; Got 0 (-62 dBm)</pre>
+        <div class="warn">模擬器的 −60 dBm 是空曠直視值。實機穿一道磚牆約 −10~15 dB、戴在動物身上再 −5~10 dB → 樂觀估 −75~−85 dBm。不要拿模擬值做續航規劃。</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    截圖由自動化流程產生：逐課點選 → 執行程式 → 等待燒錄 → 截圖 → 壓縮。<br>
+    本頁僅作學習紀錄；課程內容與 3D 模型著作權屬原作者，不轉載其程式碼或素材。
+  </footer>
+</div>
+<div id="lb" onclick="this.classList.remove('on')"><span class="x">✕</span><img id="lbi" alt=""></div>
+<script>
+fetch("data/gallery.json").then(r=>r.json()).then(d=>{
+  document.getElementById("grid").innerHTML = d.items.map(it=>`
+    <div class="card" data-img="${it.img}">
+      <img src="${it.img}" loading="lazy" alt="第 ${it.n} 課 ${it.name}">
+      <div class="b">
+        <div class="n">LESSON ${String(it.n).padStart(2,"0")}</div>
+        <div class="t">${it.name}</div>
+        <div class="why">${it.note}</div>
+      </div>
+    </div>`).join("");
+  document.querySelectorAll(".card").forEach(c=>{
+    c.onclick=()=>{document.getElementById("lbi").src=c.dataset.img;
+      document.getElementById("lb").classList.add("on");};
+  });
+});
+</script>
+</body>
+</html>

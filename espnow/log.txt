@@ -1,0 +1,27 @@
+=== Learn ESP32 · 第 14 課「板對板通訊」序列埠監視器 ===
+（2026-11-18 18:44，瀏覽器模擬器實跑，非真實硬體）
+
+正在編譯程式…
+正在透過 USB 連線 ESP32…
+寫入中… 100 %。透過 RTS 腳位硬體重設。
+
+A › 24:6F:28:A1:3C:5D
+B › 24:6F:28:B2:4C:10
+A › Sent 1
+B › Got 1 (-62 dBm)
+B › Sent 1
+A › Got 1 (-64 dBm)
+A › Sent 0
+B › Got 0 (-60 dBm)
+B › Sent 0
+A › Got 0 (-62 dBm)
+A › Sent 1
+B › Got 1 (-61 dBm)
+B › Sent 1
+A › Got 1 (-61 dBm)
+A › Sent 0
+B › Got 0 (-61 dBm)
+B › Sent 0
+A › Got 0 (-60 dBm)
+A › Sent 1
+B › Got 1 (-61 dBm)
