@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ESP32 八款開發板選型指南｜中文版</title>
+<meta name="description" content="ESP32 DevKit V1、S2、S3、C3、C6、H2、CAM、P4 八款開發板中文選型指南：規格比較、適用場景、價格帶與常見誤解。">
+<style>
+:root{
+  --bg:#0b0e13; --panel:#141a23; --panel2:#1b232e; --line:#25313f;
+  --fg:#e9eff7; --dim:#8b9bb0; --acc:#37b6ff; --warm:#ffc23c; --warm2:#ff9d2e;
+  --ok:#3ddc97; --bad:#ff6b6b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgba(255,194,60,.10), transparent 60%),
+    radial-gradient(900px 500px at 90% 0%, rgba(55,182,255,.10), transparent 55%),
+    var(--bg);
+  color:var(--fg);
+  font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:0 0 80px;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ---------- HERO ---------- */
+header{padding:54px 0 10px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.16em;
+  color:var(--warm);border:1px solid rgba(255,194,60,.35);background:rgba(255,194,60,.07);
+  padding:5px 12px;border-radius:999px;font-weight:700}
+h1{font-size:clamp(28px,5.4vw,46px);line-height:1.22;margin:16px 0 12px;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--warm)}
+.lede{color:var(--dim);font-size:16.5px;max-width:760px}
+.lede b{color:var(--fg);font-weight:600}
+.stats{display:flex;gap:26px;flex-wrap:wrap;margin:24px 0 0;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{font-size:13px;color:var(--dim)}
+.stat b{display:block;font-size:22px;color:var(--fg);font-weight:700;letter-spacing:-.02em}
+.stat b span{font-size:13px;color:var(--dim);font-weight:500;margin-left:3px}
+
+/* ---------- 快速選型 ---------- */
+h2{font-size:clamp(20px,3vw,26px);margin:52px 0 6px;letter-spacing:-.01em}
+h2 .num{color:var(--warm);font-size:15px;font-weight:700;letter-spacing:.1em;display:block;margin-bottom:6px}
+.sub{color:var(--dim);font-size:14px;margin-bottom:20px}
+.picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin-top:18px}
+.pick{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;
+  cursor:pointer;transition:.16s;text-align:left;color:inherit;font:inherit}
+.pick:hover{border-color:var(--warm);transform:translateY(-2px);background:var(--panel2)}
+.pick .q{font-size:13px;color:var(--dim);display:block;margin-bottom:6px}
+.pick .a{font-size:17px;font-weight:800;color:var(--warm)}
+.pick .why{font-size:12.5px;color:var(--dim);margin-top:6px;line-height:1.55}
+
+/* ---------- 篩選 ---------- */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 18px}
+.chip{background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:999px;
+  padding:6px 13px;font-size:13px;cursor:pointer;transition:.15s;font-family:inherit;white-space:nowrap}
+.chip:hover{color:var(--fg);border-color:#3a4a5d}
+.chip.on{background:var(--warm);border-color:var(--warm);color:#20180a;font-weight:800}
+
+/* ---------- 卡片 ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
+.card{background:linear-gradient(180deg,var(--panel),#11171f);border:1px solid var(--line);
+  border-radius:16px;padding:18px;position:relative;overflow:hidden;transition:.18s}
+.card:hover{border-color:rgba(255,194,60,.55);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.card.hide{display:none}
+.card .top{display:flex;gap:14px;align-items:flex-start}
+.card svg{flex:0 0 62px}
+.card h3{font-size:19px;letter-spacing:-.01em}
+.card .mod{font-size:12px;color:var(--dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-top:2px}
+.badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;
+  padding:3px 9px;border-radius:6px;margin-left:auto;white-space:nowrap}
+.badge.a{background:rgba(61,220,151,.15);color:var(--ok);border:1px solid rgba(61,220,151,.3)}
+.badge.b{background:rgba(55,182,255,.15);color:var(--acc);border:1px solid rgba(55,182,255,.3)}
+.badge.c{background:rgba(255,194,60,.15);color:var(--warm);border:1px solid rgba(255,194,60,.3)}
+.specs{list-style:none;margin:13px 0 0;display:grid;gap:4px}
+.specs li{display:flex;gap:8px;font-size:13.3px;color:#cbd8e8;line-height:1.45}
+.specs li span.k{color:var(--dim);min-width:64px;flex:0 0 64px}
+.specs li b{font-weight:600;color:var(--fg)}
+.uses{margin-top:13px;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px;color:#b9c8da}
+.uses b{color:var(--warm)}
+.caveat{margin-top:9px;font-size:12.5px;color:#ffc9c9;background:rgba(255,107,107,.07);
+  border-left:2px solid var(--bad);padding:7px 10px;border-radius:0 6px 6px 0}
+
+/* ---------- 表格 ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel);margin-top:18px}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:13.5px}
+th,td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:#101720;color:var(--dim);font-size:12px;letter-spacing:.06em;font-weight:700;position:sticky;top:0}
+td:first-child,th:first-child{position:sticky;left:0;background:#101720;font-weight:700;z-index:2}
+tbody tr:hover td{background:rgba(255,194,60,.05)}
+td.no{color:#7d8b9d}
+td.yes{color:var(--ok)}
+.scrollhint{font-size:12px;color:var(--dim);margin-top:8px}
+
+/* ---------- 名詞 / 誤解 ---------- */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:18px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.box h4{font-size:15px;margin-bottom:10px;color:var(--warm)}
+.box dl{display:grid;gap:9px}
+.box dt{font-weight:700;font-size:13.5px;color:var(--fg)}
+.box dd{font-size:13px;color:var(--dim);margin:1px 0 0}
+.myth{display:grid;gap:12px;margin-top:18px}
+.myth div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px}
+.myth .x{color:var(--bad);font-weight:700}
+.myth .o{color:var(--ok);font-weight:700}
+
+footer{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;color:#65758c;font-size:12.5px;line-height:1.8}
+footer a{color:var(--acc);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.back{display:inline-block;margin-top:22px;color:var(--dim);font-size:13.5px;text-decoration:none;border-bottom:1px dotted #3a4a5d}
+@media(max-width:560px){
+  .wrap{padding:0 16px}
+  header{padding:36px 0 4px}
+  .card{padding:16px}
+  .stats{gap:18px}
+  .specs li{font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">ESP32 系列選型指南</div>
+  <h1>八款 ESP32，<em>該選哪一塊？</em></h1>
+  <p class="lede">
+    同一家族、八種個性：有的便宜省電，有的能推攝影機，有的只做 Thread 網狀網路。
+    這頁把 <b>ESP32、S2、S3、C3、C6、H2、CAM、P4</b> 的核心、記憶體、無線能力與實際用途排在一起，
+    並標出<b>新手最常買錯的地方</b>。
+  </p>
+  <div class="stats">
+    <div class="stat"><b>8<span>款</span></b>開發板</div>
+    <div class="stat"><b>96–400<span>MHz</span></b>核心時脈</div>
+    <div class="stat"><b>4<span>種</span></b>無線組合</div>
+    <div class="stat"><b>NT$90<span>起</span></b>入手價</div>
+  </div>
+</header>
+
+<h2><span class="num">01 — 先看需求</span>你要做什麼？</h2>
+<p class="sub">點一個情境，下面會直接跳到對應的板子。</p>
+<div class="picker">
+  <button class="pick" data-jump="esp32">
+    <span class="q">剛入門、照教材做</span>
+    <span class="a">ESP32 DevKit V1</span>
+    <span class="why">範例最多、GPIO 最多、教學文都寫這塊</span>
+  </button>
+  <button class="pick" data-jump="s3">
+    <span class="q">要接攝影機、麥克風、螢幕</span>
+    <span class="a">ESP32-S3</span>
+    <span class="why">向量指令 + PSRAM，影音與邊緣 AI 的主力</span>
+  </button>
+  <button class="pick" data-jump="c3">
+    <span class="q">電池供電、成本要壓</span>
+    <span class="a">ESP32-C3</span>
+    <span class="why">RISC-V 單核，最便宜、待機最省</span>
+  </button>
+  <button class="pick" data-jump="c6">
+    <span class="q">要做 Matter／智慧家庭</span>
+    <span class="a">ESP32-C6</span>
+    <span class="why">Wi-Fi 6 + Thread/Zigbee 三合一</span>
+  </button>
+</div>
+
+<h2><span class="num">02 — 八款總覽</span>一張卡片一款</h2>
+<p class="sub">價格為 2026 年 11 月台灣網購（蝦皮／淘寶）參考帶，會隨匯率與記憶體配置變動。</p>
+
+<div class="filters" id="filters">
+  <button class="chip on" data-f="all">全部</button>
+  <button class="chip" data-f="beginner">入門</button>
+  <button class="chip" data-f="media">影像·語音</button>
+  <button class="chip" data-f="lowpower">低功耗</button>
+  <button class="chip" data-f="thread">Thread</button>
+  <button class="chip" data-f="usb">USB</button>
+  <button class="chip" data-f="industrial">工業</button>
+</div>
+
+<div class="grid" id="grid">
+
+  <!-- ESP32 -->
+  <article class="card" id="esp32" data-tags="beginner usb-less">
+    <div class="top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#ffc23c" stroke-width="1.6"/><rect x="22" y="26" width="20" height="14" rx="2" fill="#ffc23c" opacity=".85"/><g stroke="#ffc23c" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
+      <div><h3>ESP32 DevKit V1</h3><div class="mod">ESP32-WROOM-32</div></div>
+      <span class="badge a">入門首選</span>
+    </div>
+    <ul class="specs">
+      <li><span class="k">核心</span><b>雙核 Xtensa LX6 · 240 MHz</b></li>
+      <li><span class="k">記憶體</span><b>520 KB SRAM</b>（板上常見 4 MB Flash）</li>
+      <li><span class="k">無線</span><b>Wi-Fi 4 (2.4G)</b> ＋ 藍牙 4.2（經典＋BLE）</li>
+      <li><span class="k">USB</span>無原生 USB，靠板上 CP2102 轉序列</li>
+      <li><span class="k">價格</span>NT$120–180</li>
+    </ul>
+    <div class="uses"><b>適合：</b>入門學習、GPIO 多的專案、舊教材與範例相容、需要經典藍牙（SPP/A2DP）。</div>
+    <div class="caveat">耗電偏高，深睡仍有數十 µA 等級；電池專案不建議首選。</div>
+  </article>
+
+  <!-- S2 -->
+  <article class="card" id="s2" data-tags="usb">
+    <div class="top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#37b6ff" stroke-width="1.6"/><rect x="22" y="26" width="20" height="14" rx="2" fill="#37b6ff" opacity=".85"/><g stroke="#37b6ff" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
+      <div><h3>ESP32-S2</h3><div class="mod">ESP32-S2-WROOM</div></div>
+      <span class="badge b">USB 專用</span>
+    </div>
+    <ul class="specs">
+      <li><span class="k">核心</span><b>單核 Xtensa LX7 · 240 MHz</b></li>
+      <li><span class="k">記憶體</span><b>320 KB SRAM</b>，可外接 PSRAM</li>
+      <li><span class="k">無線</span><b>只有 Wi-Fi 4</b>，<b style="color:#ffb3b3">沒有藍牙</b></li>
+      <li><span class="k">USB</span><b>原生 USB OTG</b>（可當 HID、讀卡機）</li>
+      <li><span class="k">價格</span>NT$150–220</li>
+    </ul>
+    <div class="uses"><b>適合：</b>USB 鍵盤/滑鼠模擬、USB 讀卡機、Wi-Fi 感測器、需要嚴格 USB 控制的场合。</div>
+    <div class="caveat">沒有藍牙，要 BLE 就別選它。</div>
+  </article>
+
+  <!-- S3 -->
+  <article class="card" id="s3" data-tags="media usb">
+    <div class="top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#ff9d2e" stroke-width="1.8"/><rect x="20" y="24" width="24" height="16" rx="2" fill="#ff9d2e" opacity=".9"/><g stroke="#ff9d2e" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
+      <div><h3>ESP32-S3</h3><div class="mod">ESP32-S3-WROOM-1</div></div>
+      <span class="badge c">最萬用</span>
+    </div>
+    <ul class="specs">
+      <li><span class="k">核心</span><b>雙核 Xtensa LX7 · 240 MHz</b>（含向量指令）</li>
+      <li><span class="k">記憶體</span><b>512 KB SRAM</b>（N16R8 另加 8 MB PSRAM）</li>
+      <li><span class="k">無線</span><b>Wi-Fi 4</b> ＋ <b>藍牙 5 (LE)</b></li>
+      <li><span class="k">USB</span><b>原生 USB OTG</b></li>
+      <li><span class="k">價格</span>NT$180–350</li>
+    </ul>
+    <div class="uses"><b>適合：</b>攝影機、語音助理、LVGL 觸控螢幕、邊緣 AI（關鍵字辨識、簡易影像推論）。</div>
+    <div class="caveat">買的時候看清楚記憶體配置：<b>N16R8</b> 才有 8 MB PSRAM，N8R2 跑影像會爆。</div>
+  </article>
+
+  <!-- C3 -->
+  <article class="card" id="c3" data-tags="lowpower beginner">
+    <div class="top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#3ddc97" stroke-width="1.6"/><rect x="24" y="27" width="16" height="12" rx="2" fill="#3ddc97" opacity=".85"/><g stroke="#3ddc97" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
+      <div><h3>ESP32-C3</h3><div class="mod">ESP32-C3-WROOM-02</div></div>
+      <span class="badge a">最便宜</span>
+    </div>
+    <ul class="specs">
+      <li><span class="k">核心</span><b>單核 RISC-V · 160 MHz</b></li>
+      <li><span class="k">記憶體</span><b>400 KB SRAM</b>，不支援 PSRAM</li>
+      <li><span class="k">無線</span><b>Wi-Fi 4</b> ＋ <b>藍牙 5 (LE)</b></li>
+      <li><span class="k">USB</span>原生 USB Serial/JTAG（可直接燒錄）</li>
+      <li><span class="k">價格</span>NT$90–150</li>
+    </ul>
+    <div class="uses"><b>適合：</b>電池感測器、溫濕度上傳、Matter 燈泡、成本敏感的量產。GPIO 只有約 13 支可用。</div>
+    <div class="caveat">腳位少、不能接 PSRAM，接攝影機或大螢幕會不夠。</div>
+  </article>
+
+  <!-- C6 -->
+  <article class="card" id="c6" data-tags="thread lowpower">
+    <div class="top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#7f8cff" stroke-width="1.6"/><rect x="23" y="26" width="18" height="14" rx="2" fill="#7f8cff" opacity=".85"/><g stroke="#7f8cff" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
+      <div><h3>ESP32-C6</h3><div class="mod">ESP32-C6-WROOM-1</div></div>
+      <span class="badge c">三種無線</span>
+    </div>
+    <ul class="specs">
+      <li><span class="k">核心</span><b>單核 RISC-V · 160 MHz</b>（另含 20 MHz 低功耗核）</li>
+      <li><span class="k">記憶體</span><b>512 KB SRAM</b></li>
+      <li><span class="k">無線</span><b>Wi-Fi 6</b> ＋ <b>藍牙 5</b> ＋ <b>802.15.4</b>（Thread／Zigbee）</li>
+      <li><span class="k">USB</span>原生 USB Serial/JTAG</li>
+      <li><span class="k">價格</span>NT$150–250</li>
+    </ul>
+    <div class="uses"><b>適合：</b>Matter 裝置、Thread 邊界路由器、Zigbee 網關、智慧家庭中樞。</div>
+    <div class="caveat">單核 160 MHz，重運算（影音）不要指望它。</div>
+  </article>
+
+  <!-- H2 -->
+  <article class="card" id="h2" data-tags="thread lowpower">
+    <div class="top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#b07cff" stroke-width="1.6"/><rect x="24" y="27" width="16" height="12" rx="2" fill="#b07cff" opacity=".85"/><g stroke="#b07cff" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
+      <div><h3>ESP32-H2</h3><div class="mod">ESP32-H2-MINI-1</div></div>
+      <span class="badge b">無 Wi-Fi</span>
+    </div>
+    <ul class="specs">
+      <li><span class="k">核心</span><b>單核 RISC-V · 96 MHz</b></li>
+      <li><span class="k">記憶體</span><b>320 KB SRAM</b></li>
+      <li><span class="k">無線</span><b style="color:#ffb3b3">沒有 Wi-Fi</b>；藍牙 5 (LE) ＋ 802.15.4</li>
+      <li><span class="k">USB</span>原生 USB Serial/JTAG</li>
+      <li><span class="k">價格</span>NT$120–200</li>
+    </ul>
+    <div class="uses"><b>適合：</b>純 Zigbee／Thread 節點、門窗感測器、超低功耗電池裝置。</div>
+    <div class="caveat">要連 Wi-Fi 就完全不行，別買錯。</div>
+  </article>
+
+  <!-- CAM -->
+  <article class="card" id="cam" data-tags="media">
+    <div class="top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#ff6b6b" stroke-width="1.6"/><circle cx="32" cy="32" r="9" fill="none" stroke="#ff6b6b" stroke-width="2"/><circle cx="32" cy="32" r="3.5" fill="#ff6b6b"/><g stroke="#ff6b6b" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
+      <div><h3>ESP32-CAM</h3><div class="mod">AI-Thinker（ESP32 + OV2640）</div></div>
+      <span class="badge c">附鏡頭</span>
+    </div>
+    <ul class="specs">
+      <li><span class="k">核心</span><b>雙核 Xtensa LX6 · 240 MHz</b></li>
+      <li><span class="k">記憶體</span><b>520 KB SRAM</b> ＋ 4 MB PSRAM ＋ microSD 槽</li>
+      <li><span class="k">無線</span><b>Wi-Fi 4</b>；藍牙理論上有，但共用天線、實務幾乎不用</li>
+      <li><span class="k">USB</span><b style="color:#ffb3b3">無</b>（需外接 FTDI）</li>
+      <li><span class="k">價格</span>NT$150–250</li>
+    </ul>
+    <div class="uses"><b>適合：</b>監控、MJPEG 串流、影像觸發（PIR＋拍照上傳）、門鈴。</div>
+    <div class="caveat">GPIO 被鏡頭與 SD 佔掉大半、供電要 5V 2A 才穩；要 AI 推論請改用 S3。</div>
+  </article>
+
+  <!-- P4 -->
+  <article class="card" id="p4" data-tags="industrial media">
+    <div class="top">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="12" width="56" height="40" rx="4" fill="#1d2733" stroke="#ffd166" stroke-width="1.8"/><rect x="18" y="22" width="28" height="20" rx="2" fill="#ffd166" opacity=".9"/><g stroke="#ffd166" stroke-width="1.4" opacity=".5"><path d="M8 18h6M8 26h6M8 34h6M8 42h6M50 18h6M50 26h6M50 34h6M50 42h6"/></g></svg>
+      <div><h3>ESP32-P4</h3><div class="mod">ESP32-P4-Function-EV-Board</div></div>
+      <span class="badge b">效能旗艦</span>
+    </div>
+    <ul class="specs">
+      <li><span class="k">核心</span><b>雙核 RISC-V · 400 MHz</b>（含 AI 指令擴充）</li>
+      <li><span class="k">記憶體</span><b>768 KB SRAM</b>，可外接 PSRAM</li>
+      <li><span class="k">無線</span><b style="color:#ffb3b3">本體沒有 Wi-Fi／藍牙</b>，要靠搭配 C6 等協同晶片</li>
+      <li><span class="k">高速介面</span>MIPI-CSI／DSI、H.264 編碼、USB 2.0 HS</li>
+      <li><span class="k">價格</span>NT$300–600（開發板）</li>
+    </ul>
+    <div class="uses"><b>適合：</b>HMI 觸控面板、機器視覺、工業控制、需要相機＋螢幕＋影片解碼的場合。</div>
+    <div class="caveat">不是「插上就能連 Wi-Fi」的板子；新手先不要碰。</div>
+  </article>
+
+</div>
+
+<h2><span class="num">03 — 規格對照</span>一張表看完</h2>
+<p class="sub">手機可左右滑動。</p>
+<div class="tablewrap">
+<table>
+  <thead>
+    <tr>
+      <th>開發板</th><th>核心 / 時脈</th><th>SRAM</th><th>Wi-Fi</th><th>藍牙</th><th>802.15.4</th><th>原生 USB</th><th>PSRAM</th><th>參考價</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>ESP32 DevKit V1</td><td>雙核 LX6 / 240 MHz</td><td>520 KB</td><td>Wi-Fi 4</td><td>4.2（經典＋BLE）</td><td class="no">—</td><td class="no">無</td><td>可外接</td><td>120–180</td></tr>
+    <tr><td>ESP32-S2</td><td>單核 LX7 / 240 MHz</td><td>320 KB</td><td>Wi-Fi 4</td><td class="no">無</td><td class="no">—</td><td class="yes">有（OTG）</td><td>可外接</td><td>150–220</td></tr>
+    <tr><td>ESP32-S3</td><td>雙核 LX7 / 240 MHz</td><td>512 KB</td><td>Wi-Fi 4</td><td>5（LE）</td><td class="no">—</td><td class="yes">有（OTG）</td><td>可外接（常見 8 MB）</td><td>180–350</td></tr>
+    <tr><td>ESP32-C3</td><td>單核 RISC-V / 160 MHz</td><td>400 KB</td><td>Wi-Fi 4</td><td>5（LE）</td><td class="no">—</td><td class="yes">有（Serial/JTAG）</td><td class="no">不支援</td><td>90–150</td></tr>
+    <tr><td>ESP32-C6</td><td>單核 RISC-V / 160 MHz ＋ LP 20 MHz</td><td>512 KB</td><td class="yes">Wi-Fi 6</td><td>5（LE）</td><td class="yes">有</td><td class="yes">有（Serial/JTAG）</td><td class="no">不支援</td><td>150–250</td></tr>
+    <tr><td>ESP32-H2</td><td>單核 RISC-V / 96 MHz</td><td>320 KB</td><td class="no">無</td><td>5（LE）</td><td class="yes">有</td><td class="yes">有（Serial/JTAG）</td><td class="no">不支援</td><td>120–200</td></tr>
+    <tr><td>ESP32-CAM</td><td>雙核 LX6 / 240 MHz</td><td>520 KB</td><td>Wi-Fi 4</td><td>4.2（少用）</td><td class="no">—</td><td class="no">無（需 FTDI）</td><td>板上 4 MB</td><td>150–250</td></tr>
+    <tr><td>ESP32-P4</td><td>雙核 RISC-V / 400 MHz</td><td>768 KB</td><td class="no">無（需外掛）</td><td class="no">無（需外掛）</td><td class="no">—</td><td class="yes">USB 2.0 HS</td><td>可外接</td><td>300–600</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="scrollhint">價格單位 NT$，2026-11 網購參考值，不含運費。</div>
+
+<h2><span class="num">04 — 名詞</span>買之前先懂這幾個字</h2>
+<div class="cols">
+  <div class="box">
+    <h4>規格名詞</h4>
+    <dl>
+      <dt>Wi-Fi 4 / Wi-Fi 6</dt>
+      <dd>Wi-Fi 4 即 802.11n（2.4 GHz）；Wi-Fi 6 是 802.11ax，人多時更穩、更省電。ESP32 全系列都只跑 2.4 GHz，沒有 5 GHz。</dd>
+      <dt>802.15.4</dt>
+      <dd>Zigbee 與 Thread 的底層協定。要做 Matter 感測器、Home Assistant 網關就會用到。</dd>
+      <dt>PSRAM</dt>
+      <dd>外掛的額外記憶體，攝影機、螢幕、音訊緩衝都需要。S3 常見標示 <b>N16R8</b>＝16 MB Flash＋8 MB PSRAM。</dd>
+      <dt>原生 USB（OTG）</dt>
+      <dd>晶片自己就是 USB 裝置，可模擬鍵盤、隨身碟；沒有原生 USB 的板子靠板上轉接晶片，只能燒錄不能用來做 USB 專案。</dd>
+    </dl>
+  </div>
+  <div class="box">
+    <h4>選購提醒</h4>
+    <dl>
+      <dt>看「R」不看「N」</dt>
+      <dd>N16R8 的 R8 才是 PSRAM 大小。只寫 N16 的板子可能沒有 PSRAM。</dd>
+      <dt>腳位數 ≠ GPIO 數</dt>
+      <dd>標 30 pin 的板子，扣掉電源、GND、Flash 佔用後，實際能用的少 5–8 支。</dd>
+      <dt>供電要足</dt>
+      <dd>CAM、S3＋螢幕、P4 這類周邊多的，USB 孔供電常不夠，要外接 5V 2A。</dd>
+      <dt>天線</dt>
+      <dd>板載 PCB 天線在金屬殼內會掉訊號；要放進產品殼裡，優先選有 IPEX 外接天線座的版本。</dd>
+    </dl>
+  </div>
+</div>
+
+<h2><span class="num">05 — 修正</span>網路流傳的三個小錯誤</h2>
+<div class="myth">
+  <div><span class="x">✗ ESP32-CAM 沒有藍牙</span> → <span class="o">✓ 它有，只是跟 Wi-Fi 共用天線、實務上幾乎沒人用。</span><br>
+    <span style="color:var(--dim);font-size:13px">韌體裡關掉 Wi-Fi 後 BLE 是可用的，但別期待同時高速串流＋BLE。</span></div>
+  <div><span class="x">✗ ESP32-P4 是 758 KB SRAM</span> → <span class="o">✓ 官方規格是 768 KB。</span><br>
+    <span style="color:var(--dim);font-size:13px">而且它<b>沒有內建 Wi-Fi</b>，市售開發板通常另外掛一顆 C6 來提供無線。</span></div>
+  <div><span class="x">✗ S2 的模組叫 ESP32-S3-WROOM</span> → <span class="o">✓ S2 是 ESP32-S2-WROOM，兩者腳位不相容。</span><br>
+    <span style="color:var(--dim);font-size:13px">買錯模組會導致佈線與韌體都對不上。</span></div>
+</div>
+
+<h2><span class="num">06 — 結論</span>一句話選型</h2>
+<div class="cols">
+  <div class="box"><h4>三種最常見的情境</h4>
+    <dl>
+      <dt>只想學、照網路範例做</dt><dd>→ DevKit V1。資料最多，卡住時查得到答案。</dd>
+      <dt>要做會「看」或會「聽」的裝置</dt><dd>→ S3（N16R8）。這是目前影像與語音專案的主力。</dd>
+      <dt>要做便宜、吃電池、只要上傳數據</dt><dd>→ C3。單價最低、腳位雖少但夠用。</dd>
+    </dl>
+  </div>
+  <div class="box"><h4>什麼時候不該選 ESP32</h4>
+    <dl>
+      <dt>需要 5 GHz Wi-Fi 或高流量視訊</dt><dd>→ 改用樹莓派或 ESP32-P4＋有線網路。</dd>
+      <dt>需要 Linux、Python 套件、資料庫</dt><dd>→ 樹莓派 Zero 2 W 這類 SBC 更合適。</dd>
+      <dt>需要即時馬達控制（多軸）</dt><dd>→ STM32 系列的定時器與中斷更 deterministic。</dd>
+    </dl>
+  </div>
+</div>
+
+<footer>
+  資料來源：Espressif 官方產品頁與 datasheet（ESP32 / S2 / S3 / C3 / C6 / H2 / P4）、AI-Thinker ESP32-CAM 規格。<br>
+  價格為 2026 年 11 月台灣網購參考帶，實際以賣場為準；SRAM 皆為晶片內建容量，不含外接 PSRAM。<br>
+  本頁為中文整理版本，版面與文字為自行編寫，未使用原影片素材。<br>
+  <a href="./">← 回 Learn ESP32 20 課</a>
+</footer>
+
+</div>
+
+<script>
+// 需求卡片 → 捲到對應開發板並高亮
+document.querySelectorAll('.pick').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var id = btn.dataset.jump;
+    var card = document.getElementById(id);
+    if (!card) return;
+    resetFilter();
+    card.classList.remove('hide');
+    card.scrollIntoView({behavior: 'smooth', block: 'center'});
+    card.style.borderColor = 'var(--warm)';
+    card.style.boxShadow = '0 0 0 3px rgba(255,194,60,.18)';
+    setTimeout(function () {
+      card.style.borderColor = '';
+      card.style.boxShadow = '';
+    }, 1600);
+  });
+});
+
+// 篩選
+var chips = document.querySelectorAll('.chip');
+function resetFilter() {
+  chips.forEach(function (c) { c.classList.toggle('on', c.dataset.f === 'all'); });
+  document.querySelectorAll('.card').forEach(function (c) { c.classList.remove('hide'); });
+}
+chips.forEach(function (chip) {
+  chip.addEventListener('click', function () {
+    chips.forEach(function (c) { c.classList.remove('on'); });
+    chip.classList.add('on');
+    var f = chip.dataset.f;
+    document.querySelectorAll('.card').forEach(function (card) {
+      var tags = (card.dataset.tags || '').split(' ');
+      card.classList.toggle('hide', f !== 'all' && tags.indexOf(f) === -1);
+    });
+  });
+});
+</script>
+</body>
+</html>
