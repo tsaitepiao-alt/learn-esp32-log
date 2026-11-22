@@ -58,6 +58,19 @@ h2 .num{color:var(--warm);font-size:15px;font-weight:700;letter-spacing:.1em;dis
 .chip:hover{color:var(--fg);border-color:#3a4a5d}
 .chip.on{background:var(--warm);border-color:var(--warm);color:#20180a;font-weight:800}
 
+/* ---------- 板卡照片 ---------- */
+.shot{
+  background:linear-gradient(180deg,#f7f9fc 0%,#e7ecf3 100%);
+  border-radius:12px; height:200px; margin-bottom:14px;
+  display:flex; align-items:center; justify-content:center;
+  padding:16px; overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(10,16,24,.08), 0 2px 6px rgba(0,0,0,.25);
+}
+.shot img{
+  max-width:100%; max-height:100%; width:auto; height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 14px rgba(10,16,24,.22));
+}
 /* ---------- 卡片 ---------- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
 .card{background:linear-gradient(180deg,var(--panel),#11171f);border:1px solid var(--line);
@@ -179,8 +192,9 @@ footer a:hover{text-decoration:underline}
 
   <!-- ESP32 -->
   <article class="card" id="esp32" data-tags="beginner usb-less">
+    
+      <div class="shot"><img src="img/boards/esp32.webp" alt="ESP32 DevKit V1（ESP32-WROOM-32）開發板實物" loading="lazy"></div>
     <div class="top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#ffc23c" stroke-width="1.6"/><rect x="22" y="26" width="20" height="14" rx="2" fill="#ffc23c" opacity=".85"/><g stroke="#ffc23c" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
       <div><h3>ESP32 DevKit V1</h3><div class="mod">ESP32-WROOM-32</div></div>
       <span class="badge a">入門首選</span>
     </div>
@@ -197,8 +211,9 @@ footer a:hover{text-decoration:underline}
 
   <!-- S2 -->
   <article class="card" id="s2" data-tags="usb">
+    
+      <div class="shot"><img src="img/boards/s2.webp" alt="ESP32-S2-DevKitM-1 開發板實物" loading="lazy"></div>
     <div class="top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#37b6ff" stroke-width="1.6"/><rect x="22" y="26" width="20" height="14" rx="2" fill="#37b6ff" opacity=".85"/><g stroke="#37b6ff" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
       <div><h3>ESP32-S2</h3><div class="mod">ESP32-S2-WROOM</div></div>
       <span class="badge b">USB 專用</span>
     </div>
@@ -215,8 +230,9 @@ footer a:hover{text-decoration:underline}
 
   <!-- S3 -->
   <article class="card" id="s3" data-tags="media usb">
+    
+      <div class="shot"><img src="img/boards/s3.webp" alt="ESP32-S3-DevKitC-1 開發板實物" loading="lazy"></div>
     <div class="top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#ff9d2e" stroke-width="1.8"/><rect x="20" y="24" width="24" height="16" rx="2" fill="#ff9d2e" opacity=".9"/><g stroke="#ff9d2e" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
       <div><h3>ESP32-S3</h3><div class="mod">ESP32-S3-WROOM-1</div></div>
       <span class="badge c">最萬用</span>
     </div>
@@ -233,8 +249,9 @@ footer a:hover{text-decoration:underline}
 
   <!-- C3 -->
   <article class="card" id="c3" data-tags="lowpower beginner">
+    
+      <div class="shot"><img src="img/boards/c3.webp" alt="ESP32-C3-DevKitM-1 開發板實物" loading="lazy"></div>
     <div class="top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#3ddc97" stroke-width="1.6"/><rect x="24" y="27" width="16" height="12" rx="2" fill="#3ddc97" opacity=".85"/><g stroke="#3ddc97" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
       <div><h3>ESP32-C3</h3><div class="mod">ESP32-C3-WROOM-02</div></div>
       <span class="badge a">最便宜</span>
     </div>
@@ -251,8 +268,9 @@ footer a:hover{text-decoration:underline}
 
   <!-- C6 -->
   <article class="card" id="c6" data-tags="thread lowpower">
+    
+      <div class="shot"><img src="img/boards/c6.webp" alt="ESP32-C6-DevKitC-1 開發板實物" loading="lazy"></div>
     <div class="top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#7f8cff" stroke-width="1.6"/><rect x="23" y="26" width="18" height="14" rx="2" fill="#7f8cff" opacity=".85"/><g stroke="#7f8cff" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
       <div><h3>ESP32-C6</h3><div class="mod">ESP32-C6-WROOM-1</div></div>
       <span class="badge c">三種無線</span>
     </div>
@@ -269,8 +287,9 @@ footer a:hover{text-decoration:underline}
 
   <!-- H2 -->
   <article class="card" id="h2" data-tags="thread lowpower">
+    
+      <div class="shot"><img src="img/boards/h2.webp" alt="ESP32-H2-DevKitM-1 開發板實物" loading="lazy"></div>
     <div class="top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#b07cff" stroke-width="1.6"/><rect x="24" y="27" width="16" height="12" rx="2" fill="#b07cff" opacity=".85"/><g stroke="#b07cff" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
       <div><h3>ESP32-H2</h3><div class="mod">ESP32-H2-MINI-1</div></div>
       <span class="badge b">無 Wi-Fi</span>
     </div>
@@ -287,8 +306,9 @@ footer a:hover{text-decoration:underline}
 
   <!-- CAM -->
   <article class="card" id="cam" data-tags="media">
+    
+      <div class="shot"><img src="img/boards/cam.webp" alt="ESP32-CAM（含 OV2640 鏡頭）實物" loading="lazy"></div>
     <div class="top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="4" fill="#1d2733" stroke="#ff6b6b" stroke-width="1.6"/><circle cx="32" cy="32" r="9" fill="none" stroke="#ff6b6b" stroke-width="2"/><circle cx="32" cy="32" r="3.5" fill="#ff6b6b"/><g stroke="#ff6b6b" stroke-width="1.4" opacity=".55"><path d="M10 20h6M10 28h6M10 36h6M10 44h6M48 20h6M48 28h6M48 36h6M48 44h6"/></g></svg>
       <div><h3>ESP32-CAM</h3><div class="mod">AI-Thinker（ESP32 + OV2640）</div></div>
       <span class="badge c">附鏡頭</span>
     </div>
@@ -305,8 +325,9 @@ footer a:hover{text-decoration:underline}
 
   <!-- P4 -->
   <article class="card" id="p4" data-tags="industrial media">
+    
+      <div class="shot"><img src="img/boards/p4.webp" alt="ESP32-P4-Function-EV-Board 實物" loading="lazy"></div>
     <div class="top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="12" width="56" height="40" rx="4" fill="#1d2733" stroke="#ffd166" stroke-width="1.8"/><rect x="18" y="22" width="28" height="20" rx="2" fill="#ffd166" opacity=".9"/><g stroke="#ffd166" stroke-width="1.4" opacity=".5"><path d="M8 18h6M8 26h6M8 34h6M8 42h6M50 18h6M50 26h6M50 34h6M50 42h6"/></g></svg>
       <div><h3>ESP32-P4</h3><div class="mod">ESP32-P4-Function-EV-Board</div></div>
       <span class="badge b">效能旗艦</span>
     </div>
@@ -408,6 +429,7 @@ footer a:hover{text-decoration:underline}
   資料來源：Espressif 官方產品頁與 datasheet（ESP32 / S2 / S3 / C3 / C6 / H2 / P4）、AI-Thinker ESP32-CAM 規格。<br>
   價格為 2026 年 11 月台灣網購參考帶，實際以賣場為準；SRAM 皆為晶片內建容量，不含外接 PSRAM。<br>
   本頁為中文整理版本，版面與文字為自行編寫，未使用原影片素材。<br>
+圖片來源：ESP32-DevKitC／S2／S3／C3／C6／H2／P4 為 <a href="https://docs.espressif.com/projects/esp-dev-kits/" target="_blank" rel="noopener">Espressif 官方開發板文件</a>之產品圖；ESP32 與 ESP32-CAM 實物照來自 <a href="https://commons.wikimedia.org/wiki/File:ESP32.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>（作者 Edwiyanto／Nowforever，CC BY-SA 4.0）。<br>
   <a href="./">← 回 Learn ESP32 20 課</a>
 </footer>
 
